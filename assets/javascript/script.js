@@ -2,10 +2,104 @@ const scoreEl = document.getElementById("scoreElement");
 const startBtnEl = document.getElementById("startBtn");
 const dialogEL = document.getElementById("dialog");
 const bigScoreEL = document.getElementById("bigScore");
+const backgroundMusic = document.getElementById("backgroundMusic");
+const bgVolumeRange = document.getElementById("bgVolumeRange");
+const bgVolumeIcon = document.getElementById("bgVolumeIcon");
+// const backgroundMusic = document.getElementById("backgroundMusic");
+
+// backgroundMusic.volume = 0.2;
+
 const shootSound = document.getElementById("shootSound");
 const enemyHitSound = document.getElementById("enemyHitSound");
 const gameOverSound = document.getElementById("gameOverSound");
+
 const canvas = document.querySelector("canvas");
+document
+  .querySelector("#infoModal .modal-footer button")
+  .addEventListener("click", function (event) {
+    event.stopPropagation(); // Ngăn chặn sự kiện click lan rộng
+    // Thêm mã để đóng cửa sổ thông tin
+  });
+document
+  .querySelector(".info-icon")
+  .addEventListener("click", function (event) {
+    event.stopPropagation(); // Ngăn chặn sự kiện click lan rộng
+    // Thêm mã để mở cửa sổ thông tin
+  });
+
+// ... Phần mã JavaScript khác ...
+
+// Hàm cập nhật biểu tượng âm thanh và âm lượng dựa trên giá trị âm lượng
+function updateVolumeIconAndSound(volumeIcon, volumeRange, sound) {
+  if (volumeRange.value === "0") {
+    volumeIcon.classList.remove("fa-volume-up");
+    volumeIcon.classList.add("fa-volume-mute");
+    sound.volume = 0;
+  } else {
+    volumeIcon.classList.remove("fa-volume-mute");
+    volumeIcon.classList.add("fa-volume-up");
+    sound.volume = parseFloat(volumeRange.value);
+  }
+}
+
+// Cập nhật biểu tượng âm thanh và âm lượng khi thay đổi
+bgVolumeRange.addEventListener("input", () => {
+  updateVolumeIconAndSound(bgVolumeIcon, bgVolumeRange, backgroundMusic);
+});
+
+shootVolumeRange.addEventListener("input", () => {
+  updateVolumeIconAndSound(shootVolumeIcon, shootVolumeRange, shootSound);
+});
+
+collisionVolumeRange.addEventListener("input", () => {
+  updateVolumeIconAndSound(
+    collisionVolumeIcon,
+    collisionVolumeRange,
+    enemyHitSound
+  );
+});
+
+// Click vào biểu tượng âm thanh để tắt/bật âm lượng
+bgVolumeIcon.addEventListener("click", () => {
+  if (bgVolumeRange.value === "0") {
+    bgVolumeRange.value = "1";
+  } else {
+    bgVolumeRange.value = "0";
+  }
+  updateVolumeIconAndSound(bgVolumeIcon, bgVolumeRange, backgroundMusic);
+
+  // Tắt hoặc phát âm thanh backgroundMusic dựa trên giá trị âm lượng
+  if (bgVolumeRange.value === "0") {
+    backgroundMusic.pause();
+  } else {
+    backgroundMusic.play();
+  }
+});
+
+shootVolumeIcon.addEventListener("click", () => {
+  if (shootVolumeRange.value === "0") {
+    shootVolumeRange.value = "1";
+  } else {
+    shootVolumeRange.value = "0";
+  }
+  updateVolumeIconAndSound(shootVolumeIcon, shootVolumeRange, shootSound);
+});
+
+collisionVolumeIcon.addEventListener("click", () => {
+  if (collisionVolumeRange.value === "0") {
+    collisionVolumeRange.value = "1";
+  } else {
+    collisionVolumeRange.value = "0";
+  }
+  updateVolumeIconAndSound(
+    collisionVolumeIcon,
+    collisionVolumeRange,
+    enemyHitSound
+  );
+});
+
+// ... Phần mã JavaScript khác ...
+
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -188,6 +282,7 @@ function animate() {
     if (distanceToPlayer - enemy.radius - player.radius < 1) {
       gameOverSound.currentTime = 0;
       gameOverSound.play();
+      backgroundMusic.pause();
       cancelAnimationFrame(animationId);
       dialogEL.style.display = "block";
       bigScoreEL.innerText = score;
@@ -254,29 +349,32 @@ function animate() {
   });
 }
 window.addEventListener("click", (event) => {
-  console.log(projectiles);
-  const clientX = event.clientX;
-  const clientY = event.clientY;
-  // xác đinh góc (hay chính là hướng ) từ trung tâm tới điểm nhấp chuột
-  // atan2(y2-y1; x2-x1);
-  let angel = Math.atan2(
-    event.clientY - canvas.height / 2,
-    event.clientX - canvas.width / 2
-  );
-  // sau khi có góc chungs ta sẽ tính vận tốc x, y thông qua sin cos
-  let velocity = {
-    x: Math.cos(angel) * 7,
-    y: Math.sin(angel) * 7,
-  };
-  // mỗi lần kích chuột thì tạo ra một đường đạn mới đưa đường đạn này vào một mảng
-  projectiles.push(
-    new Projectile(canvas.width / 2, canvas.height / 2, 5, "white", velocity)
-  );
-  // Phát âm thanh bắn
+  if (animationId) {
+    // Chỉ phát âm thanh nếu trạng thái trò chơi đã bắt đầu
+    console.log(projectiles);
+    const clientX = event.clientX;
+    const clientY = event.clientY;
+    // xác đinh góc (hay chính là hướng ) từ trung tâm tới điểm nhấp chuột
+    // atan2(y2-y1; x2-x1);
+    let angel = Math.atan2(
+      event.clientY - canvas.height / 2,
+      event.clientX - canvas.width / 2
+    );
+    // sau khi có góc chungs ta sẽ tính vận tốc x, y thông qua sin cos
+    let velocity = {
+      x: Math.cos(angel) * 7,
+      y: Math.sin(angel) * 7,
+    };
+    // mỗi lần kích chuột thì tạo ra một đường đạn mới đưa đường đạn này vào một mảng
+    projectiles.push(
+      new Projectile(canvas.width / 2, canvas.height / 2, 5, "white", velocity)
+    );
+    // Phát âm thanh bắn
 
-  shootSound.currentTime = 0; // Đặt lại thời gian phát để có thể phát lại liên tục
-  shootSound.volume = 0.2;
-  shootSound.play();
+    shootSound.currentTime = 0; // Đặt lại thời gian phát để có thể phát lại liên tục
+    // shootSound.volume = 0.5;
+    shootSound.play();
+  }
 });
 startBtnEl.addEventListener("click", () => {
   dialogEL.style.display = "none";
@@ -284,4 +382,5 @@ startBtnEl.addEventListener("click", () => {
   init();
   animate();
   spawnEnemies();
+  backgroundMusic.play();
 });

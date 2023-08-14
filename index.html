@@ -8,12 +8,49 @@
   <title>Ball Shooting Game</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <!-- Thư viện Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <style>
     body {
       margin: 0;
       padding: 0;
       background: black;
+    }
+
+    .info-icon {
+      /* position: fixed; */
+      /* top: 20px; */
+      /* right: 20px; */
+      cursor: pointer;
+      /* font-size: 50px; */
+      /* color: aliceblue; */
+    }
+
+    .setting-option {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .setting-label {
+      flex: 1;
+    }
+
+    .volume-controls {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      /* Đảm bảo rằng volume-controls chiếm hết chiều rộng của setting-option */
+    }
+
+    .setting-icon {
+      margin-right: 10px;
+    }
+
+    .volume-input {
+      width: 100%;
     }
   </style>
 </head>
@@ -32,6 +69,11 @@
     <p class="text-center mb-3">Points</p>
     <button class="btn btn-primary d-block mx-auto rounded-pill fs-4 p-2 w-75" id="startBtn">Start Game</button>
   </div>
+  <audio id="backgroundMusic" loop>
+    <source src="./assets/sounds/gameBackground4.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
   <audio id="shootSound">
     <source src="./assets/sounds/shooting.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
@@ -44,6 +86,95 @@
     <source src="./assets/sounds/gameOverSound.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
+
+  <div class="info-icon position-fixed fs-1 top-0 me-2  text-light end-0">
+    <i class="fas fa-info-circle" data-bs-toggle="modal" data-bs-target="#infoModal"></i>
+  </div>
+
+
+
+  <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="infoModalLabel">Thông tin trò chơi</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Đây là trò chơi về... (mô tả trò chơi của bạn)</p>
+          <p>Quy luật chơi:</p>
+          <ul>
+            <li>Quy luật 1</li>
+            <li>Quy luật 2</li>
+            <!-- Thêm quy luật chơi khác nếu cần -->
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="settings-icon position-fixed fs-1 top-0 me-5 text-light end-0">
+    <i class="fas fa-cog" data-bs-toggle="modal" data-bs-target="#settingsModal"></i>
+  </div>
+  <!-- ... Mã HTML khác ... -->
+
+  <!-- ... Mã HTML khác ... -->
+
+  <!-- ... Mã HTML khác ... -->
+  <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="settingsModalLabel">Cài đặt</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Chỉnh âm lượng:</p>
+          <div class="setting-option">
+            <label for="bgVolumeRange" class="setting-label">Âm lượng nhạc nền:</label>
+            <div class="volume-controls">
+              <i class="fas fa-volume-up setting-icon" id="bgVolumeIcon"></i>
+              <input type="range" class="form-range" id="bgVolumeRange" min="0" max="1" step="0.1">
+            </div>
+          </div>
+          <div class="setting-option">
+            <label for="shootVolumeRange" class="setting-label">Âm lượng bắn:</label>
+            <div class="volume-controls">
+              <i class="fas fa-volume-up setting-icon" id="shootVolumeIcon"></i>
+              <input type="range" class="form-range" id="shootVolumeRange" min="0" max="1" step="0.1">
+            </div>
+          </div>
+          <div class="setting-option">
+            <label for="collisionVolumeRange" class="setting-label">Âm lượng khi va chạm:</label>
+            <div class="volume-controls">
+              <i class="fas fa-volume-up setting-icon" id="collisionVolumeIcon"></i>
+              <input type="range" class="form-range" id="collisionVolumeRange" min="0" max="1" step="0.1">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ... Mã HTML khác ... -->
+
+
+  <!-- ... Mã HTML khác ... -->
+
+
+  <!-- ... Mã HTML khác ... -->
+
+
+
+
+
   <script src="./assets/library/gsap-public/minified/gsap.min.js"></script>
   <script src="./assets/javascript/script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
