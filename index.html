@@ -25,18 +25,25 @@
   </div>
   <canvas></canvas>
 
+
   <div id="dialog" class="position-fixed top-50 start-50 translate-middle bg-white p-4 rounded shadow"
     style="width: 400px;">
     <h1 class="text-center mb-3" id="bigScore">0</h1>
     <p class="text-center mb-3">Points</p>
     <button class="btn btn-primary d-block mx-auto rounded-pill fs-4 p-2 w-75" id="startBtn">Start Game</button>
   </div>
-
-
-
-
-
-
+  <audio id="shootSound">
+    <source src="./assets/sounds/shooting.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  <audio id="enemyHitSound">
+    <source src="./assets/sounds/enemyHitSound.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  <audio id="gameOverSound">
+    <source src="./assets/sounds/gameOverSound.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
   <script src="./assets/library/gsap-public/minified/gsap.min.js"></script>
   <script src="./assets/javascript/script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"

@@ -2,7 +2,9 @@ const scoreEl = document.getElementById("scoreElement");
 const startBtnEl = document.getElementById("startBtn");
 const dialogEL = document.getElementById("dialog");
 const bigScoreEL = document.getElementById("bigScore");
-
+const shootSound = document.getElementById("shootSound");
+const enemyHitSound = document.getElementById("enemyHitSound");
+const gameOverSound = document.getElementById("gameOverSound");
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
@@ -97,12 +99,14 @@ class Particle {
     this.alpha -= 0.01;
   }
 }
+
 let x = canvas.width / 2,
   y = canvas.height / 2;
 let player = new Player(x, y, 20, "white");
 let projectiles = [];
 let enemies = [];
 let particles = [];
+
 function init() {
   player = new Player(x, y, 20, "white");
   projectiles = [];
@@ -146,6 +150,7 @@ function animate() {
   animationId = requestAnimationFrame(animate);
   // removeEventListener;
   // đổi màu nền của canvas
+  // ctx.fillStyle = "rgba(0,0,0,0.1)";
   ctx.fillStyle = "rgba(0,0,0,0.1)";
   // xoá hình ảnh luồng đạn
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -170,7 +175,6 @@ function animate() {
       projectile.y - projectile.radius > canvas.height
     ) {
       setTimeout(() => {
-        // enemies.splice(enemyIndex, 1);
         projectiles.splice(projectileIndex, 1);
       }, 0);
     }
@@ -182,6 +186,8 @@ function animate() {
     let distanceToPlayer = Math.hypot(enemy.x - player.x, enemy.y - player.y);
     // // end game khi địch va chạm vào người chơi
     if (distanceToPlayer - enemy.radius - player.radius < 1) {
+      gameOverSound.currentTime = 0;
+      gameOverSound.play();
       cancelAnimationFrame(animationId);
       dialogEL.style.display = "block";
       bigScoreEL.innerText = score;
@@ -194,6 +200,8 @@ function animate() {
       );
       // chạm nhau thì gỡ khỏi màn hình
       if (distanceToEnemy - enemy.radius - projectile.radius < 1) {
+        enemyHitSound.currentTime = 0;
+        enemyHitSound.play();
         // tao ra cac hạt nổ
         //enemy.radius * 2 vụ nổ nhiều hạt hay ít phuj thuộc vào bán kính của kẻ thủ
         for (let i = 0; i < enemy.radius * 2; i++) {
@@ -246,7 +254,6 @@ function animate() {
   });
 }
 window.addEventListener("click", (event) => {
-  //
   console.log(projectiles);
   const clientX = event.clientX;
   const clientY = event.clientY;
@@ -258,13 +265,18 @@ window.addEventListener("click", (event) => {
   );
   // sau khi có góc chungs ta sẽ tính vận tốc x, y thông qua sin cos
   let velocity = {
-    x: Math.cos(angel) * 6,
-    y: Math.sin(angel) * 6,
+    x: Math.cos(angel) * 7,
+    y: Math.sin(angel) * 7,
   };
   // mỗi lần kích chuột thì tạo ra một đường đạn mới đưa đường đạn này vào một mảng
   projectiles.push(
     new Projectile(canvas.width / 2, canvas.height / 2, 5, "white", velocity)
   );
+  // Phát âm thanh bắn
+
+  shootSound.currentTime = 0; // Đặt lại thời gian phát để có thể phát lại liên tục
+  shootSound.volume = 0.2;
+  shootSound.play();
 });
 startBtnEl.addEventListener("click", () => {
   dialogEL.style.display = "none";
