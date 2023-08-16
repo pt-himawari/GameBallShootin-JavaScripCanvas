@@ -13,9 +13,9 @@
 
   <style>
     body {
+      background-color: black;
       margin: 0;
       padding: 0;
-      background: black;
     }
 
     .info-icon {
@@ -60,8 +60,8 @@
     <span>Score:
     </span><span id="scoreElement">0</span>
   </div>
-  <canvas></canvas>
 
+  <canvas></canvas>
 
   <div id="dialog" class="position-fixed top-50 start-50 translate-middle bg-white p-4 rounded shadow"
     style="width: 400px;">
@@ -69,30 +69,12 @@
     <p class="text-center mb-3">Points</p>
     <button class="btn btn-primary d-block mx-auto rounded-pill fs-4 p-2 w-75" id="startBtn">Start Game</button>
   </div>
-  <audio id="backgroundMusic" loop>
-    <source src="./assets/sounds/gameBackground4.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
 
-  <audio id="shootSound">
-    <source src="./assets/sounds/shooting.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
-  <audio id="enemyHitSound">
-    <source src="./assets/sounds/enemyHitSound.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
-  <audio id="gameOverSound">
-    <source src="./assets/sounds/gameOverSound.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
 
+  <!-- // ---------------------------------------------------------------- -->
   <div class="info-icon position-fixed fs-1 top-0 me-2  text-light end-0">
     <i class="fas fa-info-circle" data-bs-toggle="modal" data-bs-target="#infoModal"></i>
   </div>
-
-
-
   <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -115,15 +97,9 @@
       </div>
     </div>
   </div>
-
   <div class="settings-icon position-fixed fs-1 top-0 me-5 text-light end-0">
     <i class="fas fa-cog" data-bs-toggle="modal" data-bs-target="#settingsModal"></i>
   </div>
-  <!-- ... Mã HTML khác ... -->
-
-  <!-- ... Mã HTML khác ... -->
-
-  <!-- ... Mã HTML khác ... -->
   <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -163,24 +139,24 @@
   </div>
 
 
-  <!-- ... Mã HTML khác ... -->
-
-
-  <!-- ... Mã HTML khác ... -->
-
-
-  <!-- ... Mã HTML khác ... -->
-
+  <!-- //----------------------------------------------------------------- -->
 
 
 
 
   <script src="./assets/library/gsap-public/minified/gsap.min.js"></script>
-  <script src="./assets/javascript/script.js"></script>
+  <script src="./assets/javascript/UI.js"></script>
+  <script src="./assets/javascript/Player.js"></script>
+  <script src="./assets/javascript/Projectile.js"></script>
+  <script src="./assets/javascript/Enemy.js"></script>
+  <script src="./assets/javascript/Particle.js"></script>
+  <script src="./assets/javascript/GameLogic.js"></script>
+  <script src="./assets/javascript/SoundControl.js"></script>
+
+  <script src="./assets/javascript/Main.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
     crossorigin="anonymous"></script>
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script> -->
 
 </body>
 
