@@ -6,7 +6,10 @@ canvas.height = window.innerHeight;
 const scoreEl = document.getElementById("scoreElement");
 const startBtnEl = document.getElementById("startBtn");
 const dialogEL = document.getElementById("dialog");
+// game over
 const bigScoreEL = document.getElementById("bigScore");
+const gameOverEl = document.getElementById("gameOver");
+const replayBtnEl = document.getElementById("replayBtn"); //
 
 const bgVolumeRange = document.getElementById("bgVolumeRange");
 const bgVolumeIcon = document.getElementById("bgVolumeIcon");

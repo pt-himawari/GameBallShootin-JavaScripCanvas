@@ -14,12 +14,19 @@ function init() {
   bigScoreEL.innerText = score;
   scoreEl.innerText = score;
 }
+
 startBtnEl.addEventListener("click", () => {
   dialogEL.style.display = "none";
   backgroundMusic.play();
   init();
   animate();
   spawnEnemies();
-
-  // backgroundMusic.play();
+});
+replayBtnEl.addEventListener("click", () => {
+  gameOverEl.classList.add("d-none");
+  backgroundMusic.play();
+  init();
+  animate();
+  spawnEnemies();
+  backgroundMusic.play();
 });

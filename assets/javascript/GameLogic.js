@@ -83,7 +83,8 @@ function animate() {
       cancelAnimationFrame(animationId);
       gameOverSound.play();
       backgroundMusic.pause();
-      dialogEL.style.display = "block";
+      gameOverEl.classList.remove("d-none");
+      // gameOverEl.style.display = "none";
       bigScoreEL.innerText = score;
       score = 0;
     }
